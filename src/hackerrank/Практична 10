@@ -1,0 +1,29 @@
+use std::cmp;
+use std::io::{self, BufRead};
+
+/*
+ * Complete the 'pageCount' function below.
+ *
+ * The function is expected to return an INTEGER.
+ * The function accepts following parameters:
+ * 1. INTEGER n
+ * 2. INTEGER p
+ */
+fn pageCount(n: i32, p: i32) -> i32 {
+    let from_front = p / 2;
+    let from_back = (n / 2) - (p / 2);
+    
+    cmp::min(from_front, from_back)
+}
+
+fn main() {
+    let stdin = io::stdin();
+    let mut stdin_iterator = stdin.lock().lines();
+
+    let n: i32 = stdin_iterator.next().unwrap().unwrap().trim().parse().unwrap();
+    let p: i32 = stdin_iterator.next().unwrap().unwrap().trim().parse().unwrap();
+
+    let result = pageCount(n, p);
+
+    println!("{}", result);
+}
