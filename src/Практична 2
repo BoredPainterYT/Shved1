@@ -1,0 +1,21 @@
+use std::io::{self, BufRead};
+
+fn staircase(n: i32) {
+    let n = n as usize;
+    for i in 1..=n {
+        let spaces = " ".repeat(n - i);
+        let hashes = "#".repeat(i);
+        println!("{}{}", spaces, hashes);
+    }
+}
+
+fn main() {
+    let stdin = io::stdin();
+    let mut stdin_iterator = stdin.lock().lines();
+
+    if let Some(Ok(line)) = stdin_iterator.next() {
+        if let Ok(n) = line.trim().parse::<i32>() {
+            staircase(n);
+        }
+    }
+}
