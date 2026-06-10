@@ -1,0 +1,30 @@
+use std::io::{self, BufRead};
+
+/*
+ * Complete the 'kangaroo' function below.
+ */
+fn kangaroo(x1: i32, v1: i32, x2: i32, v2: i32) -> String {
+    // Kangaroo 1 can only catch up if it's faster than Kangaroo 2
+    // and if the distance between them is perfectly divisible by the speed difference
+    if v1 > v2 && (x2 - x1) % (v1 - v2) == 0 {
+        "YES".to_string()
+    } else {
+        "NO".to_string()
+    }
+}
+
+fn main() {
+    let stdin = io::stdin();
+    let mut stdin_iterator = stdin.lock().lines();
+
+    let first_line = stdin_iterator.next().unwrap().unwrap();
+    let params: Vec<i32> = first_line
+        .split_whitespace()
+        .map(|s| s.parse().unwrap())
+        .collect();
+
+    if params.len() == 4 {
+        let result = kangaroo(params[0], params[1], params[2], params[3]);
+        println!("{}", result);
+    }
+}
