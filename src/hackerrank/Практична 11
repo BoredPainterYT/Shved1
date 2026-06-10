@@ -1,0 +1,43 @@
+use std::io::{self, BufRead};
+
+fn breaking_records(scores: &[i32]) -> Vec<i32> {
+    if scores.is_empty() {
+        return vec![0, 0];
+    }
+
+    let mut min = scores[0];
+    let mut max = scores[0];
+    let mut min_count = 0;
+    let mut max_count = 0;
+
+    for &score in scores.iter().skip(1) {
+        if score > max {
+            max = score;
+            max_count += 1;
+        } else if score < min {
+            min = score;
+            min_count += 1;
+        }
+    }
+
+    vec![max_count, min_count]
+}
+
+fn main() {
+    let stdin = io::stdin();
+    let mut iterator = stdin.lock().lines();
+
+    // Skip the first line (n)
+    let _ = iterator.next();
+
+    // Read the second line with scores
+    if let Some(Ok(line)) = iterator.next() {
+        let scores: Vec<i32> = line
+            .split_whitespace()
+            .filter_map(|s| s.parse::<i32>().ok())
+            .collect();
+
+        let result = breaking_records(&scores);
+        println!("{} {}", result[0], result[1]);
+    }
+}
