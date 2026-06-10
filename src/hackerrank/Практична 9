@@ -1,0 +1,46 @@
+use std::io::{self, BufRead};
+
+fn diagonal_difference(arr: Vec<Vec<i32>>) -> i32 {
+    let n = arr.len();
+    let mut primary_diag = 0;
+    let mut secondary_diag = 0;
+
+    for i in 0..n {
+        // Primary diagonal: row i, column i
+        primary_diag += arr[i][i];
+        // Secondary diagonal: row i, column n - 1 - i
+        secondary_diag += arr[i][n - 1 - i];
+    }
+
+    // Return the absolute difference
+    (primary_diag - secondary_diag).abs()
+}
+
+fn main() {
+    let stdin = io::stdin();
+    let mut lines = stdin.lock().lines();
+
+    // Read n (size of the matrix)
+    let n: usize = match lines.next() {
+        Some(Ok(line)) => line.trim().parse().unwrap_or(0),
+        _ => 0,
+    };
+
+    let mut matrix = Vec::new();
+
+    // Read n lines for the matrix rows
+    for _ in 0..n {
+        if let Some(Ok(line)) = lines.next() {
+            let row: Vec<i32> = line
+                .split_whitespace()
+                .filter_map(|s| s.parse().ok())
+                .collect();
+            matrix.push(row);
+        }
+    }
+
+    // Only process if matrix is correctly loaded
+    if matrix.len() == n {
+        println!("{}", diagonal_difference(matrix));
+    }
+}
