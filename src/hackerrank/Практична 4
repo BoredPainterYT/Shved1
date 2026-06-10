@@ -1,0 +1,63 @@
+use std::io::{self, BufRead};
+
+/*
+ * Complete the 'countApplesAndOranges' function below.
+ */
+fn count_apples_and_oranges(s: i32, t: i32, a: i32, b: i32, apples: Vec<i32>, oranges: Vec<i32>) {
+    let apple_count = apples
+        .iter()
+        .map(|&d| a + d)
+        .filter(|&pos| pos >= s && pos <= t)
+        .count();
+
+    let orange_count = oranges
+        .iter()
+        .map(|&d| b + d)
+        .filter(|&pos| pos >= s && pos <= t)
+        .count();
+
+    println!("{}", apple_count);
+    println!("{}", orange_count);
+}
+
+fn main() {
+    let stdin = io::stdin();
+    let mut stdin_iterator = stdin.lock().lines();
+
+    // Read s and t
+    let first_line = stdin_iterator.next().unwrap().unwrap();
+    let st: Vec<i32> = first_line
+        .split_whitespace()
+        .map(|s| s.parse().unwrap())
+        .collect();
+    let s = st[0];
+    let t = st[1];
+
+    // Read a and b
+    let second_line = stdin_iterator.next().unwrap().unwrap();
+    let ab: Vec<i32> = second_line
+        .split_whitespace()
+        .map(|s| s.parse().unwrap())
+        .collect();
+    let a = ab[0];
+    let b = ab[1];
+
+    // Read m and n (not strictly needed for calculation but present in input)
+    let _third_line = stdin_iterator.next().unwrap().unwrap();
+
+    // Read apples
+    let fourth_line = stdin_iterator.next().unwrap().unwrap();
+    let apples: Vec<i32> = fourth_line
+        .split_whitespace()
+        .map(|s| s.parse().unwrap())
+        .collect();
+
+    // Read oranges
+    let fifth_line = stdin_iterator.next().unwrap().unwrap();
+    let oranges: Vec<i32> = fifth_line
+        .split_whitespace()
+        .map(|s| s.parse().unwrap())
+        .collect();
+
+    count_apples_and_oranges(s, t, a, b, apples, oranges);
+}
